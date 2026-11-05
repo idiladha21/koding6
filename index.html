@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="id" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Pembelajaran Interaktif: Manfaat & Etika AI</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            dark: '#0B0F17',
+                            card: '#131B2E',
+                            border: '#1E293B',
+                            accent: '#6366F1',
+                            cyan: '#06B6D4',
+                            purple: '#A855F7'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #0B0F17;
+            color: #F1F5F9;
+        }
+        .glow-effect {
+            box-shadow: 0 0 25px -5px rgba(99, 102, 241, 0.25);
+        }
+        .glow-effect-cyan {
+            box-shadow: 0 0 25px -5px rgba(6, 182, 212, 0.25);
+        }
+        .glass-panel {
+            background: rgba(19, 27, 46, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        /* Custom print stylesheet for reflection summary export */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #printable-summary, #printable-summary * {
+                visibility: visible;
+            }
+            #printable-summary {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                color: #000 !important;
+                background: #fff !important;
+                padding: 20px;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="sticky top-0 z-40 glass-panel border-b border-slate-800/80">
+        <!-- Learning Progress Bar -->
+        <div class="w-full bg-slate-800 h-1.5">
+            <div id="progress-bar" class="bg-gradient-to-r from-cyan-400 via-indigo-500 to-purple-500 h-1.5 transition-all duration-500 w-1/6"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('beranda')">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 via-indigo-600 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-indigo-500/30">
+                        <i class="fa-solid fa-brain text-xl"></i>
+                    </div>
+                    <div>
+                        <span class="text-lg font-bold bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">EthicAI Edu</span>
+                        <span class="block text-xs text-cyan-400 font-medium">Media Pembelajaran Interaktif</span>
+                        <span class="block text-xs text-cyan-400 font-medium">By : Idil Adha Muslimin Hilal, S.Pd</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Nav -->
+                <nav class="hidden md:flex space-x-1 lg:space-x-2">
+                    <button onclick="switchTab('beranda')" id="nav-beranda" class="nav-btn px-3 py-2 rounded-lg text-sm font-medium transition-all text-indigo-400 bg-indigo-950/50 border border-indigo-800/50">
+                        <i class="fa-solid fa-house mr-1.5"></i> Beranda
+                    </button>
+                    <button onclick="switchTab('manfaat')" id="nav-manfaat" class="nav-btn px-3 py-2 rounded-lg text-sm font-medium transition-all text-slate-400 hover:text-slate-200 hover:bg-slate-800/50">
+                        <i class="fa-solid fa-rocket mr-1.5 text-cyan-400"></i> Manfaat AI
+                    </button>
+                    <button onclick="switchTab('etika')" id="nav-etika" class="nav-btn px-3 py-2 rounded-lg text-sm font-medium transition-all text-slate-400 hover:text-slate-200 hover:bg-slate-800/50">
+                        <i class="fa-solid fa-scale-unbalanced mr-1.5 text-amber-400"></i> Tantangan Etika
+                    </button>
+                    <button onclick="switchTab('simulasi')" id="nav-simulasi" class="nav-btn px-3 py-2 rounded-lg text-sm font-medium transition-all text-slate-400 hover:text-slate-200 hover:bg-slate-800/50">
+                        <i class="fa-solid fa-gamepad mr-1.5 text-purple-400"></i> Simulasi Dilema
+                    </button>
+                    <button onclick="switchTab('kuis')" id="nav-kuis" class="nav-btn px-3 py-2 rounded-lg text-sm font-medium transition-all text-slate-400 hover:text-slate-200 hover:bg-slate-800/50">
+                        <i class="fa-solid fa-clipboard-question mr-1.5 text-emerald-400"></i> Kuis Evaluasi
+                    </button>
+                    <button onclick="switchTab('kesimpulan')" id="nav-kesimpulan" class="nav-btn px-3 py-2 rounded-lg text-sm font-medium transition-all text-slate-400 hover:text-slate-200 hover:bg-slate-800/50">
+                        <i class="fa-solid fa-award mr-1.5 text-rose-400"></i> Kesimpulan & Prinsip
+                    </button>
+                </nav>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="text-slate-400 hover:text-white p-2 rounded-lg bg-slate-900 border border-slate-800">
+                        <i class="fa-solid fa-bars text-xl" id="menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Navigation -->
+        <div id="mobile-menu" class="hidden md:hidden bg-brand-card/95 border-b border-slate-800 px-4 pt-2 pb-4 space-y-2">
+            <button onclick="switchTab('beranda'); toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-800 flex items-center">
+                <i class="fa-solid fa-house w-6 text-indigo-400"></i> Beranda
+            </button>
+            <button onclick="switchTab('manfaat'); toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-800 flex items-center">
+                <i class="fa-solid fa-rocket w-6 text-cyan-400"></i> Manfaat AI
+            </button>
+            <button onclick="switchTab('etika'); toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-800 flex items-center">
+                <i class="fa-solid fa-scale-unbalanced w-6 text-amber-400"></i> Tantangan Etika
+            </button>
+            <button onclick="switchTab('simulasi'); toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-800 flex items-center">
+                <i class="fa-solid fa-gamepad w-6 text-purple-400"></i> Simulasi Dilema
+            </button>
+            <button onclick="switchTab('kuis'); toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-800 flex items-center">
+                <i class="fa-solid fa-clipboard-question w-6 text-emerald-400"></i> Kuis Evaluasi
+            </button>
+            <button onclick="switchTab('kesimpulan'); toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-800 flex items-center">
+                <i class="fa-solid fa-award w-6 text-rose-400"></i> Kesimpulan & Prinsip
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- ================= SECTION 0: BERANDA / HERO ================= -->
+        <section id="tab-beranda" class="tab-content space-y-12">
+            <!-- Hero Banner -->
+            <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 border border-slate-800 p-8 sm:p-12 shadow-2xl">
+                <!-- Background Decorative Elements -->
+                <div class="absolute -top-24 -right-24 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="relative z-10 max-w-3xl space-y-6">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 text-xs font-semibold uppercase tracking-wider">
+                        <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+                        Modul Pembelajaran Abad 21
+                    </div>
+
+                    <h1 class="text-3xl sm:text-5xl font-extrabold text-white leading-tight">
+                        Menyimpulkan <span class="bg-gradient-to-r from-cyan-400 via-indigo-300 to-purple-400 bg-clip-text text-transparent">Manfaat & Etika</span> Kecerdasan Artifisial
+                    </h1>
+
+                    <p class="text-slate-300 text-base sm:text-lg leading-relaxed">
+                        Kecerdasan Artifisial (AI) mentransformasi peradaban manusia dengan kecepatan luar biasa. Temukan bagaimana AI memberikan solusi revolusioner sekaligus memicu dilema etika mendasar yang membutuhkan pertimbangan moral dan nilai kemanusiaan kita.
+                    </p>
+
+                    <div class="flex flex-wrap gap-4 pt-2">
+                        <button onclick="switchTab('manfaat')" class="px-6 py-3.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold shadow-lg shadow-indigo-600/30 hover:shadow-indigo-600/50 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2">
+                            <span>Mulai Eksplorasi</span>
+                            <i class="fa-solid fa-arrow-right text-sm"></i>
+                        </button>
+                        <button onclick="switchTab('simulasi')" class="px-6 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold border border-slate-700 transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-gamepad text-purple-400"></i>
+                            <span>Coba Simulasi Etika</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Quick Stats / Highlights -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 hover:border-cyan-500/40 transition-all group cursor-pointer" onclick="switchTab('manfaat')">
+                    <div class="w-12 h-12 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center mb-4 text-xl group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <h3 class="text-3xl font-bold text-white mb-1">+40%</h3>
+                    <p class="text-slate-400 text-sm font-medium">Efisiensi Produktivitas Industri</p>
+                    <span class="inline-block mt-3 text-xs text-cyan-400 group-hover:underline">Pelajari Manfaat AI &rarr;</span>
+                </div>
+
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 hover:border-amber-500/40 transition-all group cursor-pointer" onclick="switchTab('etika')">
+                    <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center mb-4 text-xl group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h3 class="text-3xl font-bold text-white mb-1">5 Tantangan</h3>
+                    <p class="text-slate-400 text-sm font-medium">Isu Etika Utama yang Dihadapi</p>
+                    <span class="inline-block mt-3 text-xs text-amber-400 group-hover:underline">Eksplor Risiko Etika &rarr;</span>
+                </div>
+
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 hover:border-purple-500/40 transition-all group cursor-pointer" onclick="switchTab('simulasi')">
+                    <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center mb-4 text-xl group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-sliders"></i>
+                    </div>
+                    <h3 class="text-3xl font-bold text-white mb-1">3 Skenario</h3>
+                    <p class="text-slate-400 text-sm font-medium">Simulasi Keputusan Dilema Etis</p>
+                    <span class="inline-block mt-3 text-xs text-purple-400 group-hover:underline">Uji Keputusan Anda &rarr;</span>
+                </div>
+
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 hover:border-emerald-500/40 transition-all group cursor-pointer" onclick="switchTab('kesimpulan')">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-4 text-xl group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-scale-balanced"></i>
+                    </div>
+                    <h3 class="text-3xl font-bold text-white mb-1">5 Pilar</h3>
+                    <p class="text-slate-400 text-sm font-medium">Prinsip Responsible AI</p>
+                    <span class="inline-block mt-3 text-xs text-emerald-400 group-hover:underline">Lihat Matriks Prinsip &rarr;</span>
+                </div>
+            </div>
+
+            <!-- Petunjuk Navigasi Pembelajaran -->
+            <div class="p-6 rounded-2xl bg-slate-900/60 border border-slate-800 flex flex-col md:flex-row items-center gap-6">
+                <div class="w-16 h-16 rounded-2xl bg-indigo-600/20 text-indigo-400 flex items-center justify-center text-2xl flex-shrink-0">
+                    <i class="fa-solid fa-compass"></i>
+                </div>
+                <div class="space-y-1 text-center md:text-left">
+                    <h4 class="text-lg font-semibold text-white">Alur Pembelajaran Interaktif</h4>
+                    <p class="text-slate-400 text-sm">
+                        Direkomendasikan mengikuti tahapan berurutan: pahami <strong>Manfaat AI</strong> &rarr; bedah <strong>Tantangan Etika</strong> &rarr; ambil keputusan dalam <strong>Simulasi Dilema</strong> &rarr; uji pemahaman pada <strong>Kuis Evaluasi</strong> &rarr; susun <strong>Refleksi Etika Anda</strong>.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= SECTION 1: MANFAAT AI ================= -->
+        <section id="tab-manfaat" class="tab-content hidden space-y-8">
+            <div class="text-center max-w-3xl mx-auto space-y-3">
+                <span class="text-cyan-400 text-xs font-semibold tracking-wider uppercase bg-cyan-950/60 border border-cyan-800/50 px-3 py-1 rounded-full">Modul 1: Potensi & Akselerasi</span>
+                <h2 class="text-3xl font-bold text-white">Manfaat Utama Penerapan AI</h2>
+                <p class="text-slate-400 text-sm sm:text-base">
+                    Klik pada setiap kartu domain untuk mengeksplorasi penjelasan rinci dan contoh penerapan nyata di dunia industri.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Card 1 -->
+                <div onclick="openBenefitModal(1)" class="glass-panel p-6 rounded-2xl border border-slate-800 hover:border-cyan-500/50 transition-all duration-300 hover:-translate-y-1 cursor-pointer group relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 rounded-full blur-2xl group-hover:bg-cyan-500/15 transition-all"></div>
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-industry"></i>
+                        </div>
+                        <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-cyan-950 text-cyan-300 border border-cyan-800">Industri & Manufaktur</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-cyan-300 transition-colors">Efisiensi & Otomatisasi Tinggi</h3>
+                    <p class="text-slate-400 text-sm mb-4 line-clamp-2">
+                        Mengoptimalkan alur kerja, otomatisasi tugas berulang, serta efisiensi rantai pasok global dengan akurasi tinggi.
+                    </p>
+                    <div class="flex items-center text-xs font-semibold text-cyan-400 group-hover:translate-x-1 transition-transform">
+                        <span>Lihat Studi Kasus & Penjelasan</span>
+                        <i class="fa-solid fa-chevron-right ml-1"></i>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div onclick="openBenefitModal(2)" class="glass-panel p-6 rounded-2xl border border-slate-800 hover:border-rose-500/50 transition-all duration-300 hover:-translate-y-1 cursor-pointer group relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-rose-500/5 rounded-full blur-2xl group-hover:bg-rose-500/15 transition-all"></div>
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-rose-500/10 text-rose-400 flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-heart-pulse"></i>
+                        </div>
+                        <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-rose-950 text-rose-300 border border-rose-800">Kesehatan & Medis</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-rose-300 transition-colors">Diagnosa Presisi & Penemuan Obat</h3>
+                    <p class="text-slate-400 text-sm mb-4 line-clamp-2">
+                        Mendeteksi penyakit dini lewat analisis citra medis akurat serta mempercepat sintesis molekul obat baru.
+                    </p>
+                    <div class="flex items-center text-xs font-semibold text-rose-400 group-hover:translate-x-1 transition-transform">
+                        <span>Lihat Studi Kasus & Penjelasan</span>
+                        <i class="fa-solid fa-chevron-right ml-1"></i>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div onclick="openBenefitModal(3)" class="glass-panel p-6 rounded-2xl border border-slate-800 hover:border-indigo-500/50 transition-all duration-300 hover:-translate-y-1 cursor-pointer group relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 rounded-full blur-2xl group-hover:bg-indigo-500/15 transition-all"></div>
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                        </div>
+                        <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-indigo-950 text-indigo-300 border border-indigo-800">Pendidikan & Aksesibilitas</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-indigo-300 transition-colors">Pendidikan Adaptif & Terpersonalisasi</h3>
+                    <p class="text-slate-400 text-sm mb-4 line-clamp-2">
+                        Menyediakan sistem pembimbing cerdas (tutor AI), bantuan pembelajaran untuk disabilitas, dan kurikulum inklusif.
+                    </p>
+                    <div class="flex items-center text-xs font-semibold text-indigo-400 group-hover:translate-x-1 transition-transform">
+                        <span>Lihat Studi Kasus & Penjelasan</span>
+                        <i class="fa-solid fa-chevron-right ml-1"></i>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div onclick="openBenefitModal(4)" class="glass-panel p-6 rounded-2xl border border-slate-800 hover:border-emerald-500/50 transition-all duration-300 hover:-translate-y-1 cursor-pointer group relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-2xl group-hover:bg-emerald-500/15 transition-all"></div>
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-leaf"></i>
+                        </div>
+                        <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800">Keberlanjutan Lingkungan</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-emerald-300 transition-colors">Solusi Lingkungan & Energi Cerdas</h3>
+                    <p class="text-slate-400 text-sm mb-4 line-clamp-2">
+                        Memprediksi dinamika iklim, efisiensi konsumsi daya listrik jaringan (smart grid), dan optimasi pertanian presisi.
+                    </p>
+                    <div class="flex items-center text-xs font-semibold text-emerald-400 group-hover:translate-x-1 transition-transform">
+                        <span>Lihat Studi Kasus & Penjelasan</span>
+                        <i class="fa-solid fa-chevron-right ml-1"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= SECTION 2: TANTANGAN ETIKA ================= -->
+        <section id="tab-etika" class="tab-content hidden space-y-8">
+            <div class="text-center max-w-3xl mx-auto space-y-3">
+                <span class="text-amber-400 text-xs font-semibold tracking-wider uppercase bg-amber-950/60 border border-amber-800/50 px-3 py-1 rounded-full">Modul 2: Dilema & Risiko</span>
+                <h2 class="text-3xl font-bold text-white">Tantangan Etika Dasar AI</h2>
+                <p class="text-slate-400 text-sm sm:text-base">
+                    Meskipun memiliki potensi besar, AI membawa risiko etika serius yang berdampak langsung pada keadilan, privasi, dan struktur sosial.
+                </p>
+            </div>
+
+            <!-- Tabbed Accordion View -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <!-- Sidebar Menu Tabs -->
+                <div class="lg:col-span-4 space-y-2">
+                    <button onclick="showEthicsDetail(1)" id="eth-btn-1" class="ethics-nav-btn w-full text-left p-4 rounded-xl border transition-all flex items-center justify-between border-indigo-500 bg-indigo-950/40 text-white">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-scale-unbalanced text-amber-400"></i>
+                            <span class="font-semibold text-sm">1. Bias & Diskriminasi</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-xs text-slate-500"></i>
+                    </button>
+                    
+                    <button onclick="showEthicsDetail(2)" id="eth-btn-2" class="ethics-nav-btn w-full text-left p-4 rounded-xl border border-slate-800 bg-slate-900/60 text-slate-400 hover:text-slate-200 transition-all flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-user-shield text-purple-400"></i>
+                            <span class="font-semibold text-sm">2. Privasi & Pengawasan</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-xs text-slate-500"></i>
+                    </button>
+
+                    <button onclick="showEthicsDetail(3)" id="eth-btn-3" class="ethics-nav-btn w-full text-left p-4 rounded-xl border border-slate-800 bg-slate-900/60 text-slate-400 hover:text-slate-200 transition-all flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-box-open text-cyan-400"></i>
+                            <span class="font-semibold text-sm">3. Masalah 'Black Box'</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-xs text-slate-500"></i>
+                    </button>
+
+                    <button onclick="showEthicsDetail(4)" id="eth-btn-4" class="ethics-nav-btn w-full text-left p-4 rounded-xl border border-slate-800 bg-slate-900/60 text-slate-400 hover:text-slate-200 transition-all flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-briefcase text-rose-400"></i>
+                            <span class="font-semibold text-sm">4. Disrupsi Tenaga Kerja</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-xs text-slate-500"></i>
+                    </button>
+
+                    <button onclick="showEthicsDetail(5)" id="eth-btn-5" class="ethics-nav-btn w-full text-left p-4 rounded-xl border border-slate-800 bg-slate-900/60 text-slate-400 hover:text-slate-200 transition-all flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-gavel text-emerald-400"></i>
+                            <span class="font-semibold text-sm">5. Pertanggungjawaban (Akuntabilitas)</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-xs text-slate-500"></i>
+                    </button>
+                </div>
+
+                <!-- Ethics Content Panel -->
+                <div class="lg:col-span-8 glass-panel p-6 sm:p-8 rounded-2xl border border-slate-800" id="ethics-detail-panel">
+                    <!-- Dynamic Content Injected via JS -->
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= SECTION 3: SIMULASI DILEMA ================= -->
+        <section id="tab-simulasi" class="tab-content hidden space-y-8">
+            <div class="text-center max-w-3xl mx-auto space-y-3">
+                <span class="text-purple-400 text-xs font-semibold tracking-wider uppercase bg-purple-950/60 border border-purple-800/50 px-3 py-1 rounded-full">Modul 3: Simulasi Pengambilan Keputusan</span>
+                <h2 class="text-3xl font-bold text-white">Studi Kasus Dilema Etika AI</h2>
+                <p class="text-slate-400 text-sm sm:text-base">
+                    Posisikan diri Anda sebagai pembuat kebijakan atau insinyur AI. Pilih tindakan pada tiap skenario dan amati dampaknya terhadap Indikator Etika.
+                </p>
+            </div>
+
+            <!-- Simulation Container -->
+            <div class="glass-panel rounded-2xl border border-slate-800 p-6 sm:p-8">
+                <!-- Scenario Header & Step Indicator -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-6 mb-6">
+                    <div>
+                        <span id="sim-scenario-num" class="text-xs font-bold text-purple-400 uppercase tracking-widest">Skenario 1 dari 3</span>
+                        <h3 id="sim-title" class="text-xl font-bold text-white mt-1">--</h3>
+                    </div>
+                    <!-- Indicator Mini Meter -->
+                    <div class="flex items-center gap-4 bg-slate-900/80 p-3 rounded-xl border border-slate-800 text-xs">
+                        <div class="text-center">
+                            <span class="block text-slate-400">Inovasi</span>
+                            <span id="score-inovasi" class="font-bold text-cyan-400 text-sm">50</span>
+                        </div>
+                        <div class="h-6 w-px bg-slate-800"></div>
+                        <div class="text-center">
+                            <span class="block text-slate-400">Privasi</span>
+                            <span id="score-privasi" class="font-bold text-purple-400 text-sm">50</span>
+                        </div>
+                        <div class="h-6 w-px bg-slate-800"></div>
+                        <div class="text-center">
+                            <span class="block text-slate-400">Keadilan</span>
+                            <span id="score-keadilan" class="font-bold text-emerald-400 text-sm">50</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Scenario Details -->
+                <div class="space-y-6">
+                    <p id="sim-description" class="text-slate-300 leading-relaxed bg-slate-900/40 p-4 rounded-xl border border-slate-800/80">
+                        --
+                    </p>
+
+                    <div>
+                        <h4 class="text-sm font-semibold text-slate-200 mb-3">Tentukan Keputusan Anda:</h4>
+                        <div id="sim-options-container" class="space-y-3">
+                            <!-- Options injected dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Impact Analysis Modal / Card after selection -->
+                    <div id="sim-result-box" class="hidden p-6 rounded-xl bg-indigo-950/40 border border-indigo-800/60 space-y-3 animate-fade-in">
+                        <div class="flex items-center gap-2 text-indigo-300 font-semibold text-sm">
+                            <i class="fa-solid fa-chart-pie"></i>
+                            <span>Analisis Dampak Keputusan Anda:</span>
+                        </div>
+                        <p id="sim-result-text" class="text-slate-300 text-sm leading-relaxed"></p>
+                        <div class="pt-2 flex justify-end">
+                            <button onclick="nextScenario()" id="sim-next-btn" class="px-5 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-sm transition-all flex items-center gap-2">
+                                <span>Skenario Berikutnya</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= SECTION 4: KUIS EVALUASI ================= -->
+        <section id="tab-kuis" class="tab-content hidden space-y-8">
+            <div class="text-center max-w-3xl mx-auto space-y-3">
+                <span class="text-emerald-400 text-xs font-semibold tracking-wider uppercase bg-emerald-950/60 border border-emerald-800/50 px-3 py-1 rounded-full">Modul 4: Uji Pemahaman</span>
+                <h2 class="text-3xl font-bold text-white">Kuis Evaluasi Etika AI</h2>
+                <p class="text-slate-400 text-sm sm:text-base">
+                    Uji pemahaman kritis Anda mengenai manfaat, tantangan etika, dan konsep AI yang bertanggung jawab.
+                </p>
+            </div>
+
+            <div class="max-w-3xl mx-auto glass-panel p-6 sm:p-8 rounded-2xl border border-slate-800" id="quiz-container">
+                <!-- Active Quiz Screen -->
+                <div id="quiz-active" class="space-y-6">
+                    <div class="flex items-center justify-between text-xs text-slate-400 border-b border-slate-800 pb-4">
+                        <span id="quiz-progress-text">Soal 1 dari 5</span>
+                        <span id="quiz-score-live" class="font-semibold text-emerald-400">Skor: 0</span>
+                    </div>
+
+                    <h3 id="quiz-question" class="text-lg font-bold text-white leading-snug">--</h3>
+
+                    <div id="quiz-options" class="space-y-3">
+                        <!-- Options injected dynamically -->
+                    </div>
+
+                    <!-- Instant Feedback Box -->
+                    <div id="quiz-feedback" class="hidden p-4 rounded-xl border text-sm leading-relaxed"></div>
+
+                    <div class="flex justify-end pt-4">
+                        <button id="quiz-submit-btn" onclick="submitQuizAnswer()" class="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm transition-all">
+                            Periksa Jawaban
+                        </button>
+                        <button id="quiz-next-btn" onclick="nextQuizQuestion()" class="hidden px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-semibold text-sm transition-all">
+                            Soal Selanjutnya &rarr;
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quiz Completed Screen -->
+                <div id="quiz-finished" class="hidden text-center py-8 space-y-6">
+                    <div class="w-20 h-20 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center text-4xl mx-auto">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <div class="space-y-2">
+                        <h3 class="text-2xl font-bold text-white">Kuis Selesai!</h3>
+                        <p class="text-slate-400 text-sm">Berikut hasil evaluasi pemahaman materi Anda:</p>
+                    </div>
+                    <div class="inline-block p-6 rounded-2xl bg-slate-900 border border-slate-800">
+                        <span class="block text-xs uppercase text-slate-400 font-semibold mb-1">Skor Akhir Anda</span>
+                        <span id="quiz-final-score" class="text-4xl font-extrabold text-emerald-400">0/100</span>
+                        <p id="quiz-badge" class="mt-2 text-xs font-semibold px-3 py-1 rounded-full bg-indigo-950 text-indigo-300 inline-block border border-indigo-800">
+                            --
+                        </p>
+                    </div>
+                    <div class="pt-4 flex justify-center gap-4">
+                        <button onclick="resetQuiz()" class="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-semibold border border-slate-700 transition-all">
+                            <i class="fa-solid fa-rotate-right mr-1.5"></i> Ulangi Kuis
+                        </button>
+                        <button onclick="switchTab('kesimpulan')" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-sm font-semibold transition-all">
+                            Lanjut ke Refleksi &rarr;
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= SECTION 5: KESIMPULAN & PRINSIP ================= -->
+        <section id="tab-kesimpulan" class="tab-content hidden space-y-12">
+            <div class="text-center max-w-3xl mx-auto space-y-3">
+                <span class="text-rose-400 text-xs font-semibold tracking-wider uppercase bg-rose-950/60 border border-rose-800/50 px-3 py-1 rounded-full">Modul 5: Sintesis & Refleksi</span>
+                <h2 class="text-3xl font-bold text-white">5 Pilar Responsible AI</h2>
+                <p class="text-slate-400 text-sm sm:text-base">
+                    Kesimpulan utama untuk menyeimbangkan inovasi AI dengan nilai moral dan perlindungan hak asasi manusia.
+                </p>
+            </div>
+
+            <!-- Matrix 5 Pillars -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                <div class="glass-panel p-5 rounded-2xl border border-slate-800 space-y-3 hover:border-indigo-500/50 transition-all">
+                    <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center font-bold">1</div>
+                    <h4 class="font-bold text-white text-base">Keadilan (Fairness)</h4>
+                    <p class="text-slate-400 text-xs leading-relaxed">Bebas dari bias algoritma, diskriminasi gender, ras, sosial, dan ekonomi.</p>
+                </div>
+
+                <div class="glass-panel p-5 rounded-2xl border border-slate-800 space-y-3 hover:border-cyan-500/50 transition-all">
+                    <div class="w-10 h-10 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center font-bold">2</div>
+                    <h4 class="font-bold text-white text-base">Transparansi</h4>
+                    <p class="text-slate-400 text-xs leading-relaxed">Keputusan sistem AI dapat dijelaskan (Explainable AI) dan tidak sepenuhnya tertutup.</p>
+                </div>
+
+                <div class="glass-panel p-5 rounded-2xl border border-slate-800 space-y-3 hover:border-purple-500/50 transition-all">
+                    <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center font-bold">3</div>
+                    <h4 class="font-bold text-white text-base">Akuntabilitas</h4>
+                    <p class="text-slate-400 text-xs leading-relaxed">Harus ada kejelasan pertanggungjawaban hukum dan moral saat sistem AI membuat kesalahan.</p>
+                </div>
+
+                <div class="glass-panel p-5 rounded-2xl border border-slate-800 space-y-3 hover:border-emerald-500/50 transition-all">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold">4</div>
+                    <h4 class="font-bold text-white text-base">Privasi Data</h4>
+                    <p class="text-slate-400 text-xs leading-relaxed">Perlindungan ketat terhadap data pribadi pengguna tanpa pengawasan tanpa izin.</p>
+                </div>
+
+                <div class="glass-panel p-5 rounded-2xl border border-slate-800 space-y-3 hover:border-rose-500/50 transition-all">
+                    <div class="w-10 h-10 rounded-xl bg-rose-500/10 text-rose-400 flex items-center justify-center font-bold">5</div>
+                    <h4 class="font-bold text-white text-base">Pengawasan Manusia</h4>
+                    <p class="text-slate-400 text-xs leading-relaxed">Manusia tetap memegang kendali kepemimpinan (Human-in-the-loop) pada keputusan kritis.</p>
+                </div>
+            </div>
+
+            <!-- Interactive Student Reflection Builder -->
+            <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-slate-800 space-y-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+                    <div>
+                        <h3 class="text-xl font-bold text-white">Lembar Refleksi Pembelajaran Siswa</h3>
+                        <p class="text-slate-400 text-xs">Tuliskan kesimpulan pribadi Anda mengenai penerapan etika AI modern.</p>
+                    </div>
+                    <button onclick="exportReflection()" class="no-print px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold flex items-center gap-2 transition-all">
+                        <i class="fa-solid fa-print"></i>
+                        <span>Cetak / Simpan Ringkasan</span>
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 mb-1">Nama Siswa / Pengguna:</label>
+                            <input type="text" id="ref-name" placeholder="Masukkan nama Anda..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 mb-1">Manfaat AI yang Paling Berdampak Menurut Anda:</label>
+                            <textarea id="ref-benefit" rows="3" placeholder="Contoh: AI dalam bidang kesehatan yang mampu mendiagnosa penyakit secara cepat..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 mb-1">Risiko Etika AI yang Paling Mengkhawatirkan:</label>
+                            <textarea id="ref-ethical" rows="3" placeholder="Contoh: Ancaman privasi akibat pengawasan massal dan bias keputusan rekrutmen..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 mb-1">Prinsip Sikap Etis Anda Sebagai Pengguna/Pengembang AI:</label>
+                            <input type="text" id="ref-principle" placeholder="Contoh: Menggunakan AI secara bijak dan senantiasa verifikasi validitas informasi..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Printable Output Container (Hidden during normal layout, visible in print) -->
+                <div id="printable-summary" class="hidden p-6 bg-slate-900 rounded-xl border border-slate-800 text-slate-100 space-y-4">
+                    <div class="border-b pb-3 border-slate-700">
+                        <h2 class="text-xl font-bold text-indigo-400">Ringkasan Refleksi Etika Kecerdasan Artifisial (AI)</h2>
+                        <p class="text-xs text-slate-400" id="print-date">Dibuat pada: -</p>
+                    </div>
+                    <div class="space-y-3 text-sm">
+                        <p><strong>Nama:</strong> <span id="out-name">-</span></p>
+                        <p><strong>Manfaat Utama AI:</strong> <span id="out-benefit">-</span></p>
+                        <p><strong>Tantangan Etika Utama:</strong> <span id="out-ethical">-</span></p>
+                        <p><strong>Komitmen Sikap Etis:</strong> <span id="out-principle">-</span></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-slate-800/80 bg-slate-950 py-6 text-center text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div>
+                <p>&copy; Media Pembelajaran Interaktif Etika AI. Dikembangkan untuk Edukasi Abad 21.</p>
+            </div>
+            <div class="flex items-center space-x-4 text-slate-400">
+                <span class="hover:text-white cursor-pointer" onclick="switchTab('beranda')">Beranda</span>
+                <span>&bull;</span>
+                <span class="hover:text-white cursor-pointer" onclick="switchTab('manfaat')">Manfaat</span>
+                <span>&bull;</span>
+                <span class="hover:text-white cursor-pointer" onclick="switchTab('etika')">Etika</span>
+                <span>&bull;</span>
+                <span class="hover:text-white cursor-pointer" onclick="switchTab('simulasi')">Simulasi</span>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- MODAL POPUP FOR BENEFIT DETAILS -->
+    <div id="benefit-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
+        <div class="glass-panel border border-slate-700 max-w-2xl w-full rounded-2xl p-6 sm:p-8 space-y-6 relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeBenefitModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition-colors">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="flex items-center gap-4">
+                <div id="modal-icon-bg" class="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0">
+                    <i id="modal-icon" class="fa-solid fa-cube"></i>
+                </div>
+                <div>
+                    <span id="modal-tag" class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-300">Domain</span>
+                    <h3 id="modal-title" class="text-2xl font-bold text-white mt-1">Judul Manfaat</h3>
+                </div>
+            </div>
+
+            <div class="space-y-4 text-sm leading-relaxed text-slate-300">
+                <div>
+                    <h4 class="font-bold text-white text-base mb-1">Penjelasan Konseptual:</h4>
+                    <p id="modal-desc">--</p>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                    <h4 class="font-bold text-cyan-400 text-xs uppercase tracking-wider flex items-center gap-1.5">
+                        <i class="fa-solid fa-lightbulb"></i>
+                        Contoh Penerapan Nyata:
+                    </h4>
+                    <p id="modal-example" class="text-slate-300">--</p>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-emerald-400 text-xs uppercase tracking-wider mb-2">Dampak Positif Utama:</h4>
+                    <ul id="modal-impacts" class="list-disc list-inside space-y-1 text-slate-400">
+                        <!-- Items injected via JS -->
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pt-4 border-t border-slate-800 flex justify-end">
+                <button onclick="closeBenefitModal()" class="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm transition-all">
+                    Tutup Penjelasan
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // --- 1. STATE & DATA STORE ---
+        const visitedTabs = new Set(['beranda']);
+        
+        // Benefits Modal Data
+        const benefitData = {
+            1: {
+                tag: 'Industri & Manufaktur',
+                icon: 'fa-solid fa-industry',
+                iconColor: 'bg-cyan-500/10 text-cyan-400',
+                title: 'Efisiensi & Otomatisasi Industri',
+                desc: 'Kecerdasan Artifisial memungkinkan otomatisasi tugas-tugas kompleks dan berulang dengan tingkat presisi konstan tanpa kelelahan. Algoritma pembelajaran mesin mampu memprediksi kerusakan mesin sebelum terjadi (Predictive Maintenance), mengoptimalkan jaringan rantai pasokan global, dan mengurangi sampah material produksi.',
+                example: 'Pabrik manufaktur otomotif menggunakan visi komputer (computer vision) dan robot berbasis AI untuk menginspeksi cacat mikroskopis pada perakitan mesin dalam hitungan milidetik.',
+                impacts: [
+                    'Peningkatan efisiensi operasional hingga 30-40%',
+                    'Penurunan risiko kecelakaan kerja pada lingkungan berbahaya',
+                    'Penghematan biaya pemeliharaan alat secara signifikan'
+                ]
+            },
+            2: {
+                tag: 'Kesehatan & Medis',
+                icon: 'fa-solid fa-heart-pulse',
+                iconColor: 'bg-rose-500/10 text-rose-400',
+                title: 'Diagnosa Medis Presisi & Penemuan Obat',
+                desc: 'Di sektor medis, AI menganalisis ribuan citra medis (Rontgen, MRI, CT-Scan) dalam hitungan detik untuk mendeteksi tumor atau kanker pada stadium yang sangat dini. Selain itu, model AI seperti AlphaFold membantu ilmuwan memetakan struktur protein untuk merancang obat baru dalam hitungan bulan, bukan belasan tahun.',
+                example: 'Penggunaan sistem AI pemindai retina mata di India yang dapat mendeteksi gejala Retinopati Diabetik secara instan di daerah terpencil tanpa memerlukan kehadiran dokter spesialis langsung.',
+                impacts: [
+                    'Diagnosa dini penyakit kritis dengan tingkat akurasi tinggi',
+                    'Akselerasi durasi riset formulasi obat-obatan baru',
+                    'Personalisasi rencana perawatan medis berdasarkan genetik pasien'
+                ]
+            },
+            3: {
+                tag: 'Pendidikan & Aksesibilitas',
+                icon: 'fa-solid fa-graduation-cap',
+                iconColor: 'bg-indigo-500/10 text-indigo-400',
+                title: 'Pendidikan Terpersonalisasi & Inklusivitas',
+                desc: 'Setiap siswa memiliki kecepatan belajar yang berbeda. Sistem AI Adaptif mampu menganalisis gaya belajar dan kelemahan siswa untuk menyusun materi pembelajaran kustom. Selain itu, AI memberikan alat bantu aksesibilitas bagi penyandang disabilitas, seperti pembaca layar cerdas dan penerjemah bahasa isyarat real-time.',
+                example: 'Platform pembelajaran interaktif yang memberikan latihan soal matematika dengan tingkat kesulitan yang otomatis menyesuaikan pemahaman murid secara fleksibel.',
+                impacts: [
+                    'Meningkatkan keterlibatan dan pemahaman siswa',
+                    'Memperluas akses pendidikan berkualitas tanpa batas geografis',
+                    'Membantu pembelajar dengan kebutuhan khusus secara mandiri'
+                ]
+            },
+            4: {
+                tag: 'Keberlanjutan Lingkungan',
+                icon: 'fa-solid fa-leaf',
+                iconColor: 'bg-emerald-500/10 text-emerald-400',
+                title: 'Solusi Keberlanjutan & Pemodelan Iklim',
+                desc: 'AI memproses volume data iklim raksasa dari satelit untuk memprediksi pola cuaca ekstrem, memantau laju deforestasi hutan, dan mengoptimalkan penggunaan energi pada smart grid. Di sektor pertanian, AI presisi membantu petani menentukan dosis pupuk dan irigasi air secara optimal.',
+                example: 'Google menggunakan AI DeepMind untuk mengoptimalkan pendinginan pusat data (data center), berhasil mengurangi konsumsi energi listrik pendingin hingga 40%.',
+                impacts: [
+                    'Mengurangi jejak karbon pemakaian energi jaringan listrik',
+                    'Meningkatkan hasil panen pertanian dengan penggunaan irigasi hemat',
+                    'Peringatan dini bencana alam berbasis prediksi presisi'
+                ]
+            }
+        };
+
+        // Ethics Challenges Data
+        const ethicsData = {
+            1: {
+                title: 'Bias Algoritma & Diskriminasi Sistemik',
+                icon: 'fa-solid fa-scale-unbalanced text-amber-400',
+                problem: 'Sistem AI belajar dari data historis buatan manusia. Jika data historis mengandung prasangka, diskriminasi rasial, atau gender, maka AI akan memperkuat bias tersebut secara sistematis.',
+                example: 'Algoritma rekrutmen kerja AI di sebuah perusahaan teknologi global memprioritaskan pelamar pria daripada wanita karena data latihannya didominasi oleh riwayat pekerjaan pria selama 10 tahun terakhir.',
+                mitigation: 'Melakukan audit bias data secara berkala, menggunakan dataset yang inklusif dan beragam, serta melibatkan tim pengembang yang heterogen.'
+            },
+            2: {
+                title: 'Privasi Data & Pengawasan Massal (Mass Surveillance)',
+                icon: 'fa-solid fa-user-shield text-purple-400',
+                problem: 'Pengembangan AI membutuhkan data masif (Big Data). Tanpa regulasi yang ketat, terjadi pengumpulan data pribadi tanpa izin, pelacakan lokasi tanpa henti, dan pengenalan wajah massal yang mengikis hak privasi warga negara.',
+                example: 'Kamera pengawas jalanan berteknologi pengenalan wajah yang merekam gerak-gerik seluruh warga di ruang publik tanpa consent (persetujuan) demi profil perilaku.',
+                mitigation: 'Penerapan Undang-Undang Perlindungan Data Pribadi (seperti GDPR/UU PDP), enkripsi data end-to-end, dan anonimisasi data pribadi.'
+            },
+            3: {
+                title: 'Masalah Transparansi & "Black Box"',
+                icon: 'fa-solid fa-box-open text-cyan-400',
+                problem: 'Banyak algoritma AI modern (seperti Deep Neural Networks) sangat kompleks sehingga cara AI mengambil keputusan tidak dapat dipahami atau dijelaskan oleh penciptanya sendiri (kotak hitam / Black Box).',
+                example: 'Sistem perbankan menolak pengajuan pinjaman seorang nasabah, namun pihak bank tidak mampu menjelaskan alasan spesifik dibalik penolakan otomatis oleh sistem AI tersebut.',
+                mitigation: 'Mendorong pengembangan Explainable AI (XAI) yang mewajibkan algoritma memberikan alasan rasional yang dapat dipahami manusia.'
+            },
+            4: {
+                title: 'Disrupsi Ekonomi & Pergeseran Tenaga Kerja',
+                icon: 'fa-solid fa-briefcase text-rose-400',
+                problem: 'Otomatisasi cepat yang didorong AI berisiko menggantikan jutaan pekerjaan manusia dalam kurun waktu singkat, yang berpotensi memperlebar jurang ketimpangan ekonomi.',
+                example: 'Otomatisasi layanan pelanggan (customer service) dengan chatbot AI atau penggantian tenaga kerja entri data yang memicu pemutusan hubungan kerja (PHK) massal.',
+                mitigation: 'Program reskilling (pelatihan ulang) dan upskilling bagi pekerja, serta transisi ke pekerjaan baru yang membutuhkan empati dan kreativitas manusia.'
+            },
+            5: {
+                title: 'Akuntabilitas & Tanggung Jawab Hukum',
+                icon: 'fa-solid fa-gavel text-emerald-400',
+                problem: 'Ketika sistem AI yang otonom melakukan kesalahan berakibat fatal, timbul ketidakjelasan hukum: Siapa yang bertanggung jawab? Pengembang kode, pemilik data, atau pemilik sistem?',
+                example: 'Mobil otonom tanpa pengemudi mengalami kecelakaan dan menabrak pejalan kaki akibat kegagalan sensor dalam kondisi cuaca buruk.',
+                mitigation: 'Kerangka hukum yang jelas mengenai kewajiban lisensi AI, asuransi risiko AI, dan prinsip wajib Pengawasan Manusia (Human-in-the-loop).'
+            }
+        };
+
+        // Dilemma Simulation Data
+        const dilemmaScenarios = [
+            {
+                title: 'Otomatisasi Rekrutmen Tenaga Kerja',
+                desc: 'Perusahaan Anda menerima 50.000 pelamar kerja setiap bulan. Tim HR mengusulkan penggunaan sistem AI untuk menyaring CV secara otomatis. Namun, uji coba menunjukkan algoritma cenderung menurunkan skor kandidat dari kelompok minoritas karena data historis 15 tahun terakhir didominasi kelompok mayoritas.',
+                options: [
+                    {
+                        label: 'Gunakan AI secara penuh untuk efisiensi maksimal tanpa mengubah data.',
+                        inovasi: +25, privasi: 0, keadilan: -30,
+                        feedback: 'Keputusan ini sangat cepat dan hemat biaya (Inovasi naik), namun memperkuat diskriminasi sistemik bagi kelompok minoritas (Keadilan turun tajam).'
+                    },
+                    {
+                        label: 'Tunda penggunaan AI, bersihkan data bias, dan gunakan AI hanya sebagai rekomendasi pendamping HR manusia.',
+                        inovasi: +10, privasi: +5, keadilan: +20,
+                        feedback: 'Langkah seimbang! Meskipun proses seleksi membutuhkan waktu sedikit lebih lama, keadilan tetap terjaga dengan pengawasan manusia (Human-in-the-loop).'
+                    },
+                    {
+                        label: 'Batalkan seluruh teknologi AI dan tetap gunakan proses manual 100%.',
+                        inovasi: -20, privasi: 0, keadilan: +5,
+                        feedback: 'Keadilan terjaga dari bias AI, tetapi perusahaan kehilangan peluang inovasi dan kewalahan memproses beban 50.000 lamaran kerja.'
+                    }
+                ]
+            },
+            {
+                title: 'Mobil Otonom (Self-Driving Car) & Pejalan Kaki',
+                desc: 'Anda adalah insinyur perangkat lunak kendaraan otonom. Dalam situasi rem blong mendadak di jalan sempit, AI harus mengambil keputusan sepersekian detik: Membanting setir menabrak pembatas jalan (membahayakan keselamatan pengemudi) ATAU lurus menabrak dua pejalan kaki yang menyeberang sembarangan.',
+                options: [
+                    {
+                        label: 'Program AI untuk selalu memprioritaskan keselamatan pengemudi/penumpang kendaraan.',
+                        inovasi: +10, privasi: 0, keadilan: -15,
+                        feedback: 'Konsumen merasa aman membeli mobil tersebut, namun menciptakan pertanyaan moral besar mengenai harga nyawa pejalan kaki di jalan raya.'
+                    },
+                    {
+                        label: 'Program AI untuk meminimalkan jumlah korban jiwa (memilih menabrak pembatas jalan jika pengemudi sendirian).',
+                        inovasi: +5, privasi: 0, keadilan: +15,
+                        feedback: 'Mengikuti prinsip utilitarianisme (menyelamatkan lebih banyak nyawa), namun calon pembeli mungkin ragu membeli mobil yang bisa mengorbankan pengemudinya.'
+                    },
+                    {
+                        label: 'Aktifkan pengereman maksimal lurus tanpa banting setir (menyerahkan hasil pada fisika).',
+                        inovasi: -5, privasi: 0, keadilan: 0,
+                        feedback: 'Menghindari dilema pengambilan keputusan etis langsung oleh algoritma, tetapi tidak mengurangi dampak risiko kecelakaan secara cerdas.'
+                    }
+                ]
+            },
+            {
+                title: 'Pengenalan Wajah (Facial Recognition) Keamanan Kota',
+                desc: 'Kepolisian kota mengusulkan pemasangan kamera pemindai wajah AI di seluruh sudut publik untuk mendeteksi buronan dan mencegah aksi terorisme. Namun, teknologi ini juga merekam seluruh riwayat pergerakan warga sipil tanpa izin.',
+                options: [
+                    {
+                        label: 'Setujui pemasangan penuh tanpa batasan demi keamanan publik dari kriminalitas.',
+                        inovasi: +20, privasi: -35, keadilan: -10,
+                        feedback: 'Angka kejahatan dapat ditekan, namun hak privasi warga tergerus sepenuhnya dan menciptakan iklim pengawasan ketat (surveillance state).'
+                    },
+                    {
+                        label: 'Batasi penggunaan AI hanya di area vital (bandara/stasiun) dengan izin pengadilan khusus.',
+                        inovasi: +10, privasi: +15, keadilan: +10,
+                        feedback: 'Keputusan moderat yang ideal. Keamanan tetap ditingkatkan di objek vital tanpa mengorbankan privasi ruang publik warga secara umum.'
+                    },
+                    {
+                        label: 'Larang sepenuhnya penggunaan teknologi pengenalan wajah di ruang publik.',
+                        inovasi: -15, privasi: +30, keadilan: +5,
+                        feedback: 'Privasi warga terlindungi total dari pengawasan massal, namun kepolisian kehilangan alat bantu modern untuk menangkap kriminal berbahaya.'
+                    }
+                ]
+            }
+        ];
+
+        // Quiz Data
+        const quizQuestions = [
+            {
+                question: 'Apa yang dimaksud dengan isu "Black Box" dalam sistem Kecerdasan Artifisial?',
+                options: [
+                    'Kondisi di mana sistem AI mengalami kerusakan fisik pada komputernya.',
+                    'Ketidakmampuan manusia/pengembang untuk menjelaskan alasan atau logika spesifik di balik keputusan algoritma AI.',
+                    'Teknologi AI yang sengaja dirahasiakan oleh pihak militer.',
+                    'Perangkat lunak AI yang hanya bisa diakses dalam kondisi gelap.'
+                ],
+                correct: 1,
+                explanation: 'Istilah "Black Box" mengacu pada sifat sistem AI (seperti Deep Learning) yang sangat kompleks sehingga alur penalaran internalnya sulit atau tidak dapat dijelaskan secara transparan oleh manusia.'
+            },
+            {
+                question: 'Mengapa bias algoritma dapat terjadi dalam sistem rekrutmen atau kredit AI?',
+                options: [
+                    'Karena AI memiliki emosi dan rasa benci terhadap kelompok tertentu.',
+                    'Karena AI belajar dari data masa lalu yang sudah mengandung diskriminasi atau ketimpangan historis.',
+                    'Karena komputer selalu berusaha merugikan pengguna manusia.',
+                    'Karena AI tidak memiliki kapasitas penyimpanan memori yang cukup.'
+                ],
+                correct: 1,
+                explanation: 'Bias algoritma terjadi karena data pelatihan (training data) yang diberikan kepada AI berasal dari data historis buatan manusia yang sudah membawa ketimpangan atau bias emosional manusia.'
+            },
+            {
+                question: 'Prinsip "Human Oversight" atau "Human-in-the-loop" dalam Responsible AI berarti:',
+                options: [
+                    'Manusia sepenuhnya digantikan oleh robot di segala lini pekerjaan.',
+                    'Komputer harus mengawasi seluruh gerak-gerik pekerjaan manusia.',
+                    'Manusia tetap memegang kendali, verifikasi, dan tanggung jawab akhir atas keputusan kritis yang dibuat AI.',
+                    'Manusia hanya bertugas mematikan listrik saat AI rusak.'
+                ],
+                correct: 2,
+                explanation: 'Prinsip Human Oversight memastikan bahwa untuk keputusan-keputusan vital (seperti medis, hukum, rekrutmen), kendali dan pertanggungjawaban moral terakhir tetap di tangan manusia.'
+            },
+            {
+                question: 'Manakah dari berikut ini yang merupakan contoh MANFAAT AI di bidang keberlanjutan lingkungan?',
+                options: [
+                    'Membuat konten hoaks dengan generator gambar otomatis.',
+                    'Memprediksi pola cuaca ekstrem dan mengoptimalkan efisiensi energi pada smart grid.',
+                    'Menyaring pesan email spam masuk ke kotak masuk.',
+                    'Otomatisasi pengoperasian robot di pabrik pembuatan mobil.'
+                ],
+                correct: 1,
+                explanation: 'Penggunaan AI untuk analisis data iklim, peringatan dini bencana, dan penghematan daya jaringan listrik merupakan bentuk kontribusi langsung AI pada keberlanjutan lingkungan.'
+            },
+            {
+                question: 'Ketika sebuah kendaraan otonom (self-driving car) mengalami kecelakaan beruntun, tantangan etika utama yang muncul adalah:',
+                options: [
+                    'Menentukan akuntabilitas (siapa yang bertanggung jawab secara hukum & moral).',
+                    'Mengganti baterai kendaraan yang cepat habis.',
+                    'Meningkatkan kecepatan mobil agar lebih cepat sampai.',
+                    'Menghapus seluruh rekaman GPS kendaraan.'
+                ],
+                correct: 0,
+                explanation: 'Tantangan akuntabilitas mempertanyakan kejelasan hukum: Apakah kesalahan terletak pada insinyur pembuat kode, produsen mobil, pemilik kendaraan, atau data yang digunakan.'
+            }
+        ];
+
+
+        // --- 2. TAB SWITCHING LOGIC ---
+        function switchTab(tabId) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            
+            // Show target tab
+            const target = document.getElementById(`tab-${tabId}`);
+            if (target) target.classList.remove('hidden');
+
+            // Track visited tabs for progress bar
+            visitedTabs.add(tabId);
+            updateProgressBar();
+
+            // Update Nav Styling
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.className = "nav-btn px-3 py-2 rounded-lg text-sm font-medium transition-all text-slate-400 hover:text-slate-200 hover:bg-slate-800/50";
+            });
+            const activeNav = document.getElementById(`nav-${tabId}`);
+            if (activeNav) {
+                activeNav.className = "nav-btn px-3 py-2 rounded-lg text-sm font-medium transition-all text-indigo-400 bg-indigo-950/50 border border-indigo-800/50 shadow-sm";
+            }
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function updateProgressBar() {
+            const totalTabs = 5; // benefits, ethics, simulation, quiz, conclusion
+            const progress = Math.min((visitedTabs.size / totalTabs) * 100, 100);
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+
+        // --- 3. MODUL 1: BENEFIT MODAL LOGIC ---
+        function openBenefitModal(id) {
+            const data = benefitData[id];
+            if (!data) return;
+
+            document.getElementById('modal-tag').innerText = data.tag;
+            document.getElementById('modal-title').innerText = data.title;
+            document.getElementById('modal-desc').innerText = data.desc;
+            document.getElementById('modal-example').innerText = data.example;
+
+            const iconContainer = document.getElementById('modal-icon-bg');
+            iconContainer.className = `w-14 h-14 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0 ${data.iconColor}`;
+            document.getElementById('modal-icon').className = data.icon;
+
+            const impactsList = document.getElementById('modal-impacts');
+            impactsList.innerHTML = '';
+            data.impacts.forEach(imp => {
+                const li = document.createElement('li');
+                li.innerText = imp;
+                impactsList.appendChild(li);
+            });
+
+            document.getElementById('benefit-modal').classList.remove('hidden');
+        }
+
+        function closeBenefitModal() {
+            document.getElementById('benefit-modal').classList.add('hidden');
+        }
+
+
+        // --- 4. MODUL 2: ETHICS ACCORDION LOGIC ---
+        function showEthicsDetail(id) {
+            const data = ethicsData[id];
+            if (!data) return;
+
+            // Highlight button
+            document.querySelectorAll('.ethics-nav-btn').forEach(btn => {
+                btn.className = "ethics-nav-btn w-full text-left p-4 rounded-xl border border-slate-800 bg-slate-900/60 text-slate-400 hover:text-slate-200 transition-all flex items-center justify-between";
+            });
+            const activeBtn = document.getElementById(`eth-btn-${id}`);
+            if (activeBtn) {
+                activeBtn.className = "ethics-nav-btn w-full text-left p-4 rounded-xl border border-indigo-500 bg-indigo-950/40 text-white transition-all flex items-center justify-between shadow-md";
+            }
+
+            // Render panel
+            const panel = document.getElementById('ethics-detail-panel');
+            panel.innerHTML = `
+                <div class="space-y-6 animate-fade-in">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-xl">
+                            <i class="${data.icon}"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white">${data.title}</h3>
+                    </div>
+
+                    <div class="space-y-4 text-sm leading-relaxed">
+                        <div class="p-4 rounded-xl bg-amber-950/20 border border-amber-800/40 space-y-1">
+                            <span class="text-xs font-bold uppercase tracking-wider text-amber-400 block">Inti Masalah Etis:</span>
+                            <p class="text-slate-300">${data.problem}</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1">
+                            <span class="text-xs font-bold uppercase tracking-wider text-cyan-400 block">Studi Kasus Dunia Nyata:</span>
+                            <p class="text-slate-300">${data.example}</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-emerald-950/20 border border-emerald-800/40 space-y-1">
+                            <span class="text-xs font-bold uppercase tracking-wider text-emerald-400 block">Solusi & Mitigasi Etis:</span>
+                            <p class="text-slate-300">${data.mitigation}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+
+        // --- 5. MODUL 3: DILEMMA SIMULATOR LOGIC ---
+        let currentScenarioIndex = 0;
+        let scores = { inovasi: 50, privasi: 50, keadilan: 50 };
+
+        function loadScenario(index) {
+            if (index >= dilemmaScenarios.length) {
+                index = 0; // reset loop or keep at end
+            }
+            currentScenarioIndex = index;
+            const scenario = dilemmaScenarios[index];
+
+            document.getElementById('sim-scenario-num').innerText = `Skenario ${index + 1} dari ${dilemmaScenarios.length}`;
+            document.getElementById('sim-title').innerText = scenario.title;
+            document.getElementById('sim-description').innerText = scenario.desc;
+
+            // Reset Result Box
+            document.getElementById('sim-result-box').classList.add('hidden');
+
+            // Render Options
+            const optsContainer = document.getElementById('sim-options-container');
+            optsContainer.innerHTML = '';
+            scenario.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left p-4 rounded-xl border border-slate-800 bg-slate-900/80 hover:border-indigo-500/60 hover:bg-slate-800/80 transition-all text-sm text-slate-200 flex items-start gap-3 group";
+                btn.innerHTML = `
+                    <span class="w-6 h-6 rounded-full bg-slate-800 border border-slate-700 text-xs text-slate-400 flex items-center justify-center font-bold flex-shrink-0 group-hover:bg-indigo-600 group-hover:text-white transition-colors">${String.fromCharCode(65 + idx)}</span>
+                    <span class="pt-0.5">${opt.label}</span>
+                `;
+                btn.onclick = () => selectDilemmaOption(idx);
+                optsContainer.appendChild(btn);
+            });
+        }
+
+        function selectDilemmaOption(optIdx) {
+            const scenario = dilemmaScenarios[currentScenarioIndex];
+            const selected = scenario.options[optIdx];
+
+            // Update score bounds (0-100)
+            scores.inovasi = Math.min(Math.max(scores.inovasi + selected.inovasi, 0), 100);
+            scores.privasi = Math.min(Math.max(scores.privasi + selected.privasi, 0), 100);
+            scores.keadilan = Math.min(Math.max(scores.keadilan + selected.keadilan, 0), 100);
+
+            // Update UI scores
+            document.getElementById('score-inovasi').innerText = scores.inovasi;
+            document.getElementById('score-privasi').innerText = scores.privasi;
+            document.getElementById('score-keadilan').innerText = scores.keadilan;
+
+            // Show feedback
+            document.getElementById('sim-result-text').innerText = selected.feedback;
+            document.getElementById('sim-result-box').classList.remove('hidden');
+
+            // Disable options
+            const opts = document.getElementById('sim-options-container').querySelectorAll('button');
+            opts.forEach((b, i) => {
+                b.disabled = true;
+                if(i === optIdx) {
+                    b.classList.add('border-indigo-500', 'bg-indigo-950/40');
+                } else {
+                    b.classList.add('opacity-40');
+                }
+            });
+        }
+
+        function nextScenario() {
+            if (currentScenarioIndex + 1 < dilemmaScenarios.length) {
+                loadScenario(currentScenarioIndex + 1);
+            } else {
+                // Done all scenarios
+                loadScenario(0); // Restart loop
+            }
+        }
+
+
+        // --- 6. MODUL 4: QUIZ LOGIC ---
+        let currentQuestionIdx = 0;
+        let quizScore = 0;
+        let selectedOption = null;
+
+        function renderQuizQuestion() {
+            const q = quizQuestions[currentQuestionIdx];
+            document.getElementById('quiz-progress-text').innerText = `Soal ${currentQuestionIdx + 1} dari ${quizQuestions.length}`;
+            document.getElementById('quiz-score-live').innerText = `Skor: ${quizScore}`;
+            document.getElementById('quiz-question').innerText = q.question;
+
+            const optsDiv = document.getElementById('quiz-options');
+            optsDiv.innerHTML = '';
+            selectedOption = null;
+
+            q.options.forEach((opt, idx) => {
+                const label = document.createElement('label');
+                label.className = "flex items-center space-x-3 p-4 rounded-xl border border-slate-800 bg-slate-900/60 hover:bg-slate-800/80 cursor-pointer transition-all text-sm text-slate-200";
+                label.innerHTML = `
+                    <input type="radio" name="quiz-opt" value="${idx}" class="form-radio text-indigo-600 focus:ring-indigo-500 h-4 w-4">
+                    <span>${opt}</span>
+                `;
+                label.onclick = () => { selectedOption = idx; };
+                optsDiv.appendChild(label);
+            });
+
+            // Reset buttons & feedback
+            document.getElementById('quiz-feedback').classList.add('hidden');
+            document.getElementById('quiz-submit-btn').classList.remove('hidden');
+            document.getElementById('quiz-next-btn').classList.add('hidden');
+        }
+
+        function submitQuizAnswer() {
+            if (selectedOption === null) {
+                alert("Silakan pilih salah satu jawaban terlebih dahulu.");
+                return;
+            }
+
+            const q = quizQuestions[currentQuestionIdx];
+            const feedbackBox = document.getElementById('quiz-feedback');
+            feedbackBox.classList.remove('hidden');
+
+            if (selectedOption === q.correct) {
+                quizScore += 20;
+                feedbackBox.className = "p-4 rounded-xl border text-sm leading-relaxed bg-emerald-950/40 border-emerald-800/60 text-emerald-200";
+                feedbackBox.innerHTML = `
+                    <div class="font-bold mb-1 flex items-center gap-2 text-emerald-400">
+                        <i class="fa-solid fa-circle-check"></i> Jawaban Tepat! (+20 Poin)
+                    </div>
+                    <p>${q.explanation}</p>
+                `;
+            } else {
+                feedbackBox.className = "p-4 rounded-xl border text-sm leading-relaxed bg-rose-950/40 border-rose-800/60 text-rose-200";
+                feedbackBox.innerHTML = `
+                    <div class="font-bold mb-1 flex items-center gap-2 text-rose-400">
+                        <i class="fa-solid fa-circle-xmark"></i> Jawaban Kurang Tepat
+                    </div>
+                    <p>${q.explanation}</p>
+                `;
+            }
+
+            document.getElementById('quiz-score-live').innerText = `Skor: ${quizScore}`;
+            document.getElementById('quiz-submit-btn').classList.add('hidden');
+            document.getElementById('quiz-next-btn').classList.remove('hidden');
+
+            // Disable radio inputs
+            const radios = document.getElementsByName('quiz-opt');
+            radios.forEach(r => r.disabled = true);
+        }
+
+        function nextQuizQuestion() {
+            currentQuestionIdx++;
+            if (currentQuestionIdx < quizQuestions.length) {
+                renderQuizQuestion();
+            } else {
+                // Show quiz finished screen
+                document.getElementById('quiz-active').classList.add('hidden');
+                document.getElementById('quiz-finished').classList.remove('hidden');
+                document.getElementById('quiz-final-score').innerText = `${quizScore}/100`;
+
+                let badge = "Pemula AI Ethics";
+                if (quizScore >= 80) badge = "Pakar Etika AI (Sangat Baik)";
+                else if (quizScore >= 60) badge = "Pengamat Etika AI (Cukup)";
+                document.getElementById('quiz-badge').innerText = badge;
+            }
+        }
+
+        function resetQuiz() {
+            currentQuestionIdx = 0;
+            quizScore = 0;
+            selectedOption = null;
+            document.getElementById('quiz-finished').classList.add('hidden');
+            document.getElementById('quiz-active').classList.remove('hidden');
+            renderQuizQuestion();
+        }
+
+
+        // --- 7. MODUL 5: REFLECTION EXPORT LOGIC ---
+        function exportReflection() {
+            const name = document.getElementById('ref-name').value || 'Siswa / Pengguna';
+            const benefit = document.getElementById('ref-benefit').value || 'Belum diisi';
+            const ethical = document.getElementById('ref-ethical').value || 'Belum diisi';
+            const principle = document.getElementById('ref-principle').value || 'Belum diisi';
+
+            document.getElementById('out-name').innerText = name;
+            document.getElementById('out-benefit').innerText = benefit;
+            document.getElementById('out-ethical').innerText = ethical;
+            document.getElementById('out-principle').innerText = principle;
+            document.getElementById('print-date').innerText = `Dibuat pada: ${new Date().toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}`;
+
+            document.getElementById('printable-summary').classList.remove('hidden');
+
+            // Trigger window print
+            window.print();
+        }
+
+
+        // --- 8. INITIALIZATION ON LOAD ---
+        window.onload = function() {
+            // Load initial ethics panel
+            showEthicsDetail(1);
+
+            // Load initial dilemma scenario
+            loadScenario(0);
+
+            // Load initial quiz
+            renderQuizQuestion();
+        };
+    </script>
+</body>
+</html>
